@@ -68,7 +68,7 @@ with col_esq:
     st.bar_chart(data=df_categories, x='nome_categoria', y='faturamento')
 
 with col_dir:
-    st.subheader("🤖 Predição de Risco de Churn (IA)")
+    st.subheader("Predição de Risco de Churn (IA)")
     st.markdown("Clique no botão abaixo para rodar o modelo preditivo sobre a nossa base de clientes ativa.")
 
     if st.button("Executar Análise Preditiva"):
@@ -77,13 +77,12 @@ with col_dir:
             X = df_features[['total_pedidos', 'total_gasto', 'ticket_medio']]
             df_features['previsao_churn'] = modelo.predict(X)
 
-            # Filtra apenas quem o modelo previu que vai dar Churn (Classe 1)
             clientes_em_risco = df_features[df_features['previsao_churn'] == 1][['id_cliente', 'nome', 'email']]
 
             if not clientes_em_risco.empty:
-                st.warning(f"⚠️ Atenção: A IA identificou {len(clientes_em_risco)} clientes com alto risco de abandonar a loja!")
+                st.warning(f"Atenção: A IA identificou {len(clientes_em_risco)} clientes com alto risco de abandonar a loja!")
                 st.dataframe(clientes_em_risco, use_container_width=True)
             else:
-                st.success("✅ Excelente! A IA analisou a base e nenhum cliente foi classificado em risco crítico.")
+                st.success("Excelente! A IA analisou a base e nenhum cliente foi classificado em risco crítico.")
         else:
             st.error("Arquivo do modelo ('modelo_churn.pkl') não foi encontrado. Execute o treino no Jupyter primeiro.")
